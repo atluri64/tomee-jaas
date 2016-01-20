@@ -6,7 +6,9 @@ package com.cubic.cts;
 
 import java.io.IOException;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +26,9 @@ public class AsyncServlet extends HttpServlet {
 	@EJB
 	private JaasEJB jaasEjb;
 	
+	@Resource(name="exec/sample")
+	ManagedExecutorService execService;
+	
 	protected void service(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
 		
 		//WORKING: This piece of code is working fine.
@@ -34,7 +39,7 @@ public class AsyncServlet extends HttpServlet {
 		final AsyncContext asyncCtx = req.startAsync();
 		asyncCtx.setTimeout(0);
 		
-		asyncCtx.start(new Runnable() {
+		execService.execute(new Runnable() {
 			
 			@Override
 			public void run() {

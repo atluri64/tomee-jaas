@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomee>
+  <!-- see http://tomee.apache.org/containers-and-resources.html -->
+
+  <!-- activate next line to be able to deploy applications in apps -->
+  <Resource  id="exec/sample" factory-name="create" 
+        class-name="org.apache.openejb.concurrencyutilities.ee.factory.ManagedExecutorServiceImplFactory" 
+        type="javax.enterprise.concurrent.ManagedExecutorService">
+                Core=1     
+                Max=8     
+                KeepAlive=5s 
+                Queue=15 
+                ThreadFactory=org.apache.openejb.concurrencyutilities.ee.impl.ManagedThreadFactoryImpl 
+        </Resource>
+  <!-- <Deployments dir="apps" /> -->
+</tomee>
